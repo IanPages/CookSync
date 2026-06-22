@@ -1,10 +1,16 @@
+import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
+
+
 from database import get_db, Base, engine
-from models import User,Home,HomeMember,Recipe,Ingredient,RecipeIngredient,ShoppingListItem,HomeRecipeHistory,ChatMessage
+from endpoints.user import router as auth_router
+
+##Logger for better error tracking into the CLI
+logger = logging.getLogger("cooksync.main")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,6 +29,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+app.include_router(auth_router)
+
+## Standard Checks ##
 
 @app.get("/")
 async def root():

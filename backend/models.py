@@ -1,9 +1,13 @@
 import uuid
+import logging
 from typing import List, Optional
 from datetime import datetime
 from sqlalchemy import String, ForeignKey, DateTime, text, Numeric, Boolean, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from database import Base
+
+##Logger for better error tracking into the CLI
+logger = logging.getLogger("cooksync.models")
 
 #Core Tables
 class User(Base):
@@ -12,11 +16,13 @@ class User(Base):
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
     username: Mapped[str] = mapped_column(String(50), nullable=False)
     email: Mapped[str] = mapped_column(String(254), nullable=False,unique=True)
-    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    password_hash: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    google_id: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, unique=True)
+    picture: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=text("TIMEZONE('utc',NOW())"))
 
     home_associations: Mapped[List["HomeMember"]] = relationship(back_populates="user",cascade="all, delete-orphan")
-    messages: Mapped[List["ChatMessages"]] = relationship(back_populates="user")
+    messages: Mapped[List["ChatMessage"]] = relationship(back_populates="user")
 
 class Home(Base):
     __tablename__ = "homes"
@@ -121,5 +127,5 @@ class RecipeIngredient(Base):
     quantity: Mapped[float] = mapped_column(Numeric(10,2),nullable=False)
     unit: Mapped[str] = mapped_column(String(10), nullable=False)
 
-    recipe: Mapped["Recipe"] = relationship(back_populates="ingredient_associantions")
+    recipe: Mapped["Recipe"] = relationship(back_populates="ingredient_associations")
     ingredient: Mapped["Ingredient"]= relationship(back_populates="recipe_associations")
