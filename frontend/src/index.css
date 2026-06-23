@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@theme {
+    --color-cook-bg: #FDFBF7;
+    /*Main Containter Background color */
+    --color-cook-surface: #F5EBE0;
+    /* Cards / Div bg color */
+    --color-cook-primary: #D4A373;
+    /* Main highlight color*/
+    --color-cook-accent: #C15C3D;
+    /* Accent color */
+    --color-cook-main: #3D342E;
+    /* Main texts */
+    --color-cook-muted: #7F6A5B;
+    /* Secondary texts */
+}
+
+body {
+    background-color: var(--color-cook-bg);
+    color: var(--color-cook-main);
+}
+
+a {
+    color: var(--color-cook-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-cook-accent);
+}
+
+button {
+    background-color: var(--color-cook-primary);
+    color: var(--color-cook-surface);
+}
+
+button:hover {
+    background-color: var(--color-cook-accent);
+}
+
+input {
+    background-color: var(--color-cook-surface);
+    color: var(--color-cook-main);
+}

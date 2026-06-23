@@ -3,7 +3,9 @@
 export default function Home() {
     return (
         <>
-            <p className="text-white text-3xl">Home</p>
+            <div className="rounded-xl bg-cook-surface p-6">
+                <p className="text-cook-main text-3xl">Home</p>
+            </div>
         </>
     )
 
