@@ -23,11 +23,11 @@ function App() {
           <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
             <div className="flex lg:flex-1">
               <NavLink to="/" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
+                <span className="sr-only">CookSync</span>
                 <img
                   alt=""
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                  className="h-8 w-auto"
+                  src="/logoIp.png"
+                  className="h-12 w-auto rounded-xl"
                 />
               </NavLink>
             </div>
@@ -43,33 +43,33 @@ function App() {
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
               {navigation.map((item) => (
-                <NavLink to={item.href} className="text-sm/6 font-semibold text-white">
+                <NavLink to={item.href} className="font-semibold ">
                   {item.name}
                 </NavLink>
               ))}
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <NavLink to="/login" className="text-sm/6 font-semibold text-white">
+              <NavLink to="/login" className=" font-semibold text-white">
                 Log in <span aria-hidden="true">&rarr;</span>
               </NavLink>
             </div>
           </nav>
           <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
             <div className="fixed inset-0 z-50" />
-            <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
+            <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-cook-bg p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10 shadow-xl shadow-cook-accent/40">
               <div className="flex items-center justify-between">
                 <NavLink to="/" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Your Company</span>
+                  <span className="sr-only">CookSync</span>
                   <img
                     alt=""
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                    className="h-8 w-auto"
+                    src="/logoIp.png"
+                    className="h-12 w-auto rounded-xl"
                   />
                 </NavLink>
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="-m-2.5 rounded-md p-2.5 text-gray-200"
+                  className="-m-2.5 rounded-md p-2.5"
                 >
                   <span className="sr-only">Close menu</span>
                   <XMarkIcon aria-hidden="true" className="size-6" />
@@ -88,6 +88,7 @@ function App() {
                       </NavLink>
                     ))}
                   </div>
+                  <hr className='bg-cook-accent ' />
                   <div className="py-6">
                     <Link
                       to="/login"
@@ -108,7 +109,7 @@ function App() {
             <Route path="/login" element={<Login />} />
           </Routes>
         </main>
-        <footer className="fixed bottom-0 w-full mt-6 p-4 text-center">
+        <footer className="relative bottom-0 w-full mt-6 p-4 text-center">
           <p className="text-gray-500 text-sm">
             &copy; {new Date().getFullYear()} Ian Pagés Rodríguez. All rights reserved.
           </p>
