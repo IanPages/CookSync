@@ -148,6 +148,7 @@ async def verify_google_token(
     db: AsyncSession = Depends(get_db)
 ):
     id_info = verify_google_id_token(payload.id_token)
+    #print(id_info)
     
     email = id_info.get("email")
     google_id = id_info.get("sub")

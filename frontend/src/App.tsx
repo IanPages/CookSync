@@ -3,18 +3,27 @@ import { useState } from 'react'
 import './App.css'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { NavLink, Link, Route, Routes } from 'react-router-dom'
+import { NavLink, Link, Route, Routes, useNavigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Home from './components/home'
 import About from './components/about'
 import Login from './components/login'
+import { useAuth } from './context/auth_context'
 
 function App() {
-  //const [count, setCount] = useState(0)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { isLoggedIn, user, logout } = useAuth()
+  const navigate = useNavigate()
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
   ]
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+  }
 
   return (
     <>
@@ -43,15 +52,35 @@ function App() {
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
               {navigation.map((item) => (
-                <NavLink to={item.href} className="font-semibold ">
+                <NavLink key={item.name} to={item.href} className="font-semibold ">
                   {item.name}
                 </NavLink>
               ))}
             </div>
-            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <NavLink to="/login" className=" font-semibold text-white">
-                Log in <span aria-hidden="true">&rarr;</span>
-              </NavLink>
+            <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-4">
+              {isLoggedIn && user ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    {user.picture ? (
+                      <img src={user.picture} alt={user.username} className="h-8 w-8 rounded-full object-cover ring-2 ring-white/20" />
+                    ) : (
+                      <div className="h-8 w-8 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                        {user.username.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="p-1 m-2 font-semibold cursor-pointer"
+                  >
+                    Log out <span aria-hidden="true">→</span>
+                  </button>
+                </>
+              ) : (
+                <NavLink to="/login" className="font-semibold text-white">
+                  Log in <span aria-hidden="true">→</span>
+                </NavLink>
+              )}
             </div>
           </nav>
           <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -89,13 +118,33 @@ function App() {
                     ))}
                   </div>
                   <hr className='bg-cook-accent ' />
-                  <div className="py-6">
-                    <Link
-                      to="/login"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
-                    >
-                      Log in
-                    </Link>
+                  <div className="py-6 grid grid-cols-2 gap-2 justify-items-center items-center">
+                    {isLoggedIn && user ? (
+                      <>
+                        <div className="flex items-center gap-3 px-3 py-2 mb-2">
+                          {user.picture ? (
+                            <img src={user.picture} alt={user.username} className="h-8 w-8 rounded-full object-cover" />
+                          ) : (
+                            <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white font-semibold text-sm">
+                              {user.username.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                        </div>
+                        <button
+                          onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
+                          className="text-center block w-full rounded-lg px-3 py-2.5  font-semibold cursor-pointer"
+                        >
+                          Log out
+                        </button>
+                      </>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="block w-full rounded-lg py-2.5 font-semibold cursor-pointer"
+                      >
+                        Log in
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
@@ -115,6 +164,7 @@ function App() {
           </p>
         </footer>
       </div>
+      <ToastContainer />
     </>
   )
 }
