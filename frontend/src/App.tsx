@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Home from './components/home'
 import About from './components/about'
 import Login from './components/login'
+import Register from './components/register'
 import { useAuth } from './context/auth_context'
 
 function App() {
@@ -71,15 +72,20 @@ function App() {
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-1 m-2 font-semibold cursor-pointer"
+                    className="p-1 m-2 font-semibold cursor-pointer rounded-lg"
                   >
                     Log out <span aria-hidden="true">→</span>
                   </button>
                 </>
               ) : (
-                <NavLink to="/login" className="font-semibold text-white">
-                  Log in <span aria-hidden="true">→</span>
-                </NavLink>
+                <>
+                  <NavLink to="/login" className="font-semibold text-white">
+                    Log in <span aria-hidden="true">→</span>
+                  </NavLink>
+                  <NavLink to="/register" className="font-semibold text-white">
+                    Register <span aria-hidden="true">→</span>
+                  </NavLink>
+                </>
               )}
             </div>
           </nav>
@@ -156,6 +162,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
         <footer className="relative bottom-0 w-full mt-6 p-4 text-center">

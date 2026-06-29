@@ -24,3 +24,21 @@ export interface User {
     email: string;
     picture: string | null;
 }
+
+export interface UserRegister {
+    username: string;
+    email: string;
+    password: string;
+}
+
+
+export interface UserRegisterResponse {
+    access_token: string;
+    token_type: string;
+    user: {
+        id: string;
+        username: string;
+        email: string;
+
+    }
+}
