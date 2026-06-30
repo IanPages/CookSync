@@ -13,3 +13,10 @@ class HomeMember(BaseModel):
 class HomeJoinRequest(BaseModel):
     invite_code: str
 
+class HomeUpdateRequest(BaseModel):
+    home_id: int
+    name: str
+
+class HomeKickUserRequest(BaseModel):
+    home_id: int
+    user_id: int
