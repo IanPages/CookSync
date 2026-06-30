@@ -16,10 +16,19 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { isLoggedIn, user, logout } = useAuth()
   const navigate = useNavigate()
-  const navigation = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-  ]
+  const navigation = isLoggedIn
+    ? [
+        { name: 'Home', href: '/' },
+        { name: 'Household', href: '/household' },
+        { name: 'Profile', href: '/profile' },
+        { name: 'About', href: '/about' },
+      ]
+    : [
+        { name: 'Home', href: '/' },
+        { name: 'About', href: '/about' },
+      ]
+
+
 
   const handleLogout = () => {
     logout()
@@ -28,6 +37,18 @@ function App() {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="min-h-screen relative overflow-x-hidden">
         <header className="relative inset-x-0 top-0 z-50">
           <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">

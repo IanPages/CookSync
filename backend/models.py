@@ -21,7 +21,6 @@ class User(Base):
     picture: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=text("TIMEZONE('utc',NOW())"))
 
-    homes_owned: Mapped[List["Home"]] = relationship(back_populates="owner",cascade="all, delete-orphan")
     home_associations: Mapped[List["HomeMember"]] = relationship(back_populates="user",cascade="all, delete-orphan")
     messages: Mapped[List["ChatMessage"]] = relationship(back_populates="user")
 
@@ -34,7 +33,6 @@ class Home(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=text("TIMEZONE('utc', NOW())"))
     owner_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     
-    owner: Mapped["User"] = relationship(back_populates="home_associations")
     member_associations: Mapped[List["HomeMember"]] = relationship(back_populates="home", cascade="all, delete-orphan")
     recipes: Mapped[List["Recipe"]] = relationship(back_populates="home", cascade="all, delete-orphan")
     shopping_items: Mapped[List["ShoppingListItem"]] = relationship(back_populates="home", cascade="all, delete-orphan")
