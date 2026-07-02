@@ -8,6 +8,7 @@ from sqlalchemy import text
 
 from database import get_db, Base, engine
 from endpoints.user import router as auth_router
+from endpoints.home import router as home_router
 
 ##Logger for better error tracking into the CLI
 logger = logging.getLogger("cooksync.main")
@@ -32,7 +33,7 @@ app.add_middleware(
 
 
 app.include_router(auth_router)
-
+app.include_router(home_router)
 ## Standard Checks ##
 
 @app.get("/")

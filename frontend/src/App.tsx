@@ -11,6 +11,7 @@ import About from './components/about'
 import Login from './components/login'
 import Register from './components/register'
 import { useAuth } from './context/auth_context'
+import Household from './components/household'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -18,15 +19,15 @@ function App() {
   const navigate = useNavigate()
   const navigation = isLoggedIn
     ? [
-        { name: 'Home', href: '/' },
-        { name: 'Household', href: '/household' },
-        { name: 'Profile', href: '/profile' },
-        { name: 'About', href: '/about' },
-      ]
+      { name: 'Home', href: '/' },
+      { name: 'Household', href: '/household' },
+      { name: 'Profile', href: '/profile' },
+      { name: 'About', href: '/about' },
+    ]
     : [
-        { name: 'Home', href: '/' },
-        { name: 'About', href: '/about' },
-      ]
+      { name: 'Home', href: '/' },
+      { name: 'About', href: '/about' },
+    ]
 
 
 
@@ -66,7 +67,7 @@ function App() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200"
+                className="-m-2.5 inline-flex items-center bg-cook-primary justify-center rounded-md p-2.5 text-gray-200"
               >
                 <span className="sr-only">Open main menu</span>
                 <Bars3Icon aria-hidden="true" className="size-6" />
@@ -93,7 +94,7 @@ function App() {
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-1 m-2 font-semibold cursor-pointer rounded-lg"
+                    className="p-1 m-2 font-semibold bg-cook-primary cursor-pointer rounded-lg"
                   >
                     Log out <span aria-hidden="true">→</span>
                   </button>
@@ -125,7 +126,7 @@ function App() {
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="-m-2.5 rounded-md p-2.5"
+                  className="-m-2.5 rounded-md p-2.5 bg-cook-primary"
                 >
                   <span className="sr-only">Close menu</span>
                   <XMarkIcon aria-hidden="true" className="size-6" />
@@ -159,7 +160,7 @@ function App() {
                         </div>
                         <button
                           onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-                          className="text-center block w-full rounded-lg px-3 py-2.5  font-semibold cursor-pointer"
+                          className="text-center block w-full rounded-lg px-3 py-2.5  bg-cook-primary font-semibold cursor-pointer"
                         >
                           Log out
                         </button>
@@ -184,6 +185,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/household" element={<Household />} />
           </Routes>
         </main>
         <footer className="relative bottom-0 w-full mt-6 p-4 text-center">

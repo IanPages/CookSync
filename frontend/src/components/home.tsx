@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
     HomeIcon,
     ShoppingCartIcon,
@@ -7,6 +8,7 @@ import {
     CheckIcon,
     PlusIcon
 } from '@heroicons/react/24/outline'
+import { useAuth } from '../context/auth_context'
 
 export default function Home() {
     const [groceryList, setGroceryList] = useState([
@@ -16,6 +18,9 @@ export default function Home() {
         { id: 4, name: 'Penne pasta (500g)', checked: false },
         { id: 5, name: 'Garlic cloves & parmesan', checked: false },
     ])
+
+    const { token } = useAuth()
+    const isLoggedIn = !!token
 
     const toggleGroceryItem = (id: number) => {
         setGroceryList(prev => prev.map(item => item.id === id ? { ...item, checked: !item.checked } : item))
@@ -47,10 +52,10 @@ export default function Home() {
                 </p>
 
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-                    <button className="flex items-center gap-2 px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-cook-primary/20 hover:scale-[1.02] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer">
+                    <Link to={isLoggedIn ? "/household" : "/register"} className="flex items-center gap-2 px-8 py-3.5 bg-cook-main rounded-xl font-semibold shadow-lg shadow-cook-primary/20 hover:scale-[1.02] hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer">
                         Get Started Free
                         <ArrowRightIcon className="size-5" />
-                    </button>
+                    </Link>
                     <a href="#demo" className="px-8 py-3.5 rounded-xl font-semibold border-2 border-cook-primary/30 text-cook-main hover:bg-cook-primary/5 hover:border-cook-primary hover:-translate-y-0.5 active:translate-y-0 transition-all text-center w-full sm:w-auto">
                         See it in Action
                     </a>
@@ -185,12 +190,12 @@ export default function Home() {
                                                 return nextList
                                             })
                                         }}
-                                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold cursor-pointer shadow-xs hover:scale-[1.02] transition-transform"
+                                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-cook-primary cursor-pointer shadow-xs hover:scale-[1.02] transition-transform"
                                     >
                                         <PlusIcon className="size-3.5" />
                                         Add all ingredients to Grocery List
                                     </button>
-                                    <button className="px-3 py-2 rounded-lg text-xs font-semibold bg-transparent border border-cook-primary/40 text-cook-main hover:bg-cook-primary/10 hover:border-cook-primary transition-all cursor-pointer">
+                                    <button className="px-3 py-2 rounded-lg text-xs font-semibold bg-cook-primary border border-cook-primary/40 text-cook-main hover:bg-cook-primary/10 hover:border-cook-primary transition-all cursor-pointer">
                                         Save recipe
                                     </button>
                                 </div>
@@ -204,7 +209,7 @@ export default function Home() {
                                 className="flex-1 px-4 py-2 rounded-xl text-sm border border-cook-primary/20 focus:outline-none focus:border-cook-accent bg-cook-bg transition-colors"
                                 disabled
                             />
-                            <button className="px-4 py-2 rounded-xl text-sm font-semibold cursor-not-allowed opacity-60">Send</button>
+                            <button className="px-4 py-2 rounded-xl text-sm font-semibold bg-cook-primary cursor-not-allowed opacity-60">Send</button>
                         </div>
                     </div>
 
@@ -258,7 +263,7 @@ export default function Home() {
                                 placeholder="Add manual item (e.g. Eggs)..."
                                 className="flex-1 px-4 py-2 rounded-xl text-sm border border-cook-primary/20 focus:outline-none focus:border-cook-accent bg-cook-bg transition-colors"
                             />
-                            <button type="submit" className="px-4 py-2 rounded-xl text-sm font-semibold flex items-center justify-center cursor-pointer hover:scale-[1.02] transition-transform">
+                            <button type="submit" className="px-4 py-2 rounded-xl text-sm bg-cook-primary font-semibold flex items-center justify-center cursor-pointer hover:scale-[1.02] transition-transform">
                                 Add
                             </button>
                         </form>
