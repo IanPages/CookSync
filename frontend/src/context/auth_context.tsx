@@ -16,7 +16,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (storedToken && storedUser) {
             setToken(storedToken);
             try {
-                setUser(JSON.parse(storedUser));
+                const parsedUser = JSON.parse(storedUser);
+                if (parsedUser && parsedUser.created_at) {
+                    // Ensure created_at is a string and normalize it for Date constructor
+                    const normalizedDate = String(parsedUser.created_at).endsWith('Z')
+                        ? parsedUser.created_at
+                        : parsedUser.created_at.includes('T')
+                            ? parsedUser.created_at + 'Z'
+                            : parsedUser.created_at;
+                    parsedUser.created_at = normalizedDate;
+                }
+                setUser(parsedUser);
+                // Fetch fresh user data in background
+                import("../../services/user_services").then(({ getUserProfile }) => {
+                    getUserProfile(storedToken)
+                        .then((freshUser) => {
+                            setUser(freshUser);
+                            localStorage.setItem("user", JSON.stringify(freshUser));
+                        })
+                        .catch((err) => console.error("Failed to fetch fresh user", err));
+                });
             } catch (error) {
                 console.error("Failed to parse stored user", error);
                 localStorage.removeItem("token");

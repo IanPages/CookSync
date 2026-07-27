@@ -23,6 +23,7 @@ export interface User {
     username: string;
     email: string;
     picture: string | null;
+    created_at?: string;
 }
 
 export interface UserRegister {
@@ -41,4 +42,9 @@ export interface UserRegisterResponse {
         email: string;
 
     }
+}
+
+export interface ChangePasswordRequest {
+    old_password?: string;
+    new_password: string;
 }

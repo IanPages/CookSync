@@ -67,7 +67,9 @@ async def register(payload: RegisterRequest, db: AsyncSession = Depends(get_db))
         "user": {
             "id": str(new_user.id),
             "username": new_user.username,
-            "email": new_user.email
+            "email": new_user.email,
+            "picture": new_user.picture,
+            "created_at": new_user.created_at.isoformat() if new_user.created_at else None
         }
     }
 
@@ -103,7 +105,8 @@ async def login(payload: LoginRequest, db: AsyncSession = Depends(get_db)):
             "id": str(user.id),
             "username": user.username,
             "email": user.email,
-            "picture": user.picture
+            "picture": user.picture,
+            "created_at": user.created_at.isoformat() if user.created_at else None
         }
     }
 
@@ -203,7 +206,8 @@ async def verify_google_token(
             "id": str(user.id),
             "username": user.username,
             "email": user.email,
-            "picture": user.picture
+            "picture": user.picture,
+            "created_at": user.created_at.isoformat() if user.created_at else None
         }
     }
 
@@ -295,7 +299,8 @@ async def google_callback(
                 "id": str(user.id),
                 "username": user.username,
                 "email": user.email,
-                "picture": user.picture
+                "picture": user.picture,
+                "created_at": user.created_at.isoformat() if user.created_at else None
             }
         }
     except Exception as e:

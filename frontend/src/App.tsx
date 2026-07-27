@@ -2,7 +2,7 @@ import { useState } from 'react'
 //import reactLogo from './assets/react.svg'
 import './App.css'
 import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline'
 import { NavLink, Link, Route, Routes, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -12,6 +12,7 @@ import Login from './components/login'
 import Register from './components/register'
 import { useAuth } from './context/auth_context'
 import Household from './components/household'
+import Profile from './components/profile'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -94,9 +95,11 @@ function App() {
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="p-1 m-2 font-semibold bg-cook-primary cursor-pointer rounded-lg"
+                    className=" flex items-center gap-2 bg-cook-primary text-white px-4 py-2 rounded-lg transition-colors border border-white/10"
                   >
-                    Log out <span aria-hidden="true">→</span>
+
+                    <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                    Log out
                   </button>
                 </>
               ) : (
@@ -160,8 +163,9 @@ function App() {
                         </div>
                         <button
                           onClick={() => { handleLogout(); setMobileMenuOpen(false); }}
-                          className="text-center block w-full rounded-lg px-3 py-2.5  bg-cook-primary font-semibold cursor-pointer"
+                          className="mb-4 flex items-center gap-2 bg-cook-primary text-white px-4 py-2 rounded-lg transition-colors border border-white/10"
                         >
+                          <ArrowLeftOnRectangleIcon className="h-5 w-5" />
                           Log out
                         </button>
                       </>
@@ -186,6 +190,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/household" element={<Household />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
         <footer className="relative bottom-0 w-full mt-6 p-4 text-center">
