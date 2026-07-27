@@ -86,11 +86,11 @@ function App() {
                 <>
                   <div className="flex items-center gap-2">
                     {user.picture ? (
-                      <img src={user.picture} alt={user.username} className="h-8 w-8 rounded-full object-cover ring-2 ring-white/20" />
+                      <Link to="/profile"><img src={user.picture} alt={user.username} className="h-8 w-8 rounded-full object-cover ring-2 ring-white/20" /></Link>
                     ) : (
-                      <div className="h-8 w-8 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                      <Link to="/profile"><div className="h-8 w-8 rounded-full flex items-center justify-center text-white font-semibold text-sm">
                         {user.username.charAt(0).toUpperCase()}
-                      </div>
+                      </div></Link>
                     )}
                   </div>
                   <button
@@ -142,6 +142,7 @@ function App() {
                       <NavLink
                         key={item.name}
                         to={item.href}
+                        onClick={() => setMobileMenuOpen(false)}
                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5"
                       >
                         {item.name}
@@ -154,11 +155,11 @@ function App() {
                       <>
                         <div className="flex items-center gap-3 px-3 py-2 mb-2">
                           {user.picture ? (
-                            <img src={user.picture} alt={user.username} className="h-8 w-8 rounded-full object-cover" />
+                            <Link to="/profile"><img src={user.picture} alt={user.username} className="h-8 w-8 rounded-full object-cover" /></Link>
                           ) : (
-                            <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white font-semibold text-sm">
+                            <Link to="/profile"><div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white font-semibold text-sm">
                               {user.username.charAt(0).toUpperCase()}
-                            </div>
+                            </div></Link>
                           )}
                         </div>
                         <button
